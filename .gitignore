@@ -1,0 +1,28 @@
+# Python
+backend/venv/
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+
+# ChromaDB runtime data
+backend/data/chroma_db/
+
+# Environment
+.env
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Bash setup files (run once, then delete)
+phase1_backend_scaffold.sh
+phase1_ai_setup.sh
+phase1_frontend_setup.sh
