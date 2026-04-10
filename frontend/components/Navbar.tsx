@@ -1,9 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Shield } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const NAV_LINKS = [
+  { href: "/simulate", label: "Simulate" },
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/evolution-history", label: "Historical Cycle" },
+];
 
 export default function Navbar() {
+  const pathname = usePathname();
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-[100] border-b border-white/[0.08] bg-background/80 backdrop-blur-xl">
       <div className="max-w-[1400px] mx-auto px-8 h-14 flex items-center justify-between">
@@ -16,15 +26,18 @@ export default function Navbar() {
           </Link>
           
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="/simulate" className="text-[13px] font-medium text-text-secondary hover:text-white transition-colors">
-              Simulate
-            </Link>
-            <Link href="/dashboard" className="text-[13px] font-medium text-text-secondary hover:text-white transition-colors">
-              Dashboard
-            </Link>
-            <Link href="/evolution-history" className="text-[13px] font-medium text-text-secondary hover:text-white transition-colors">
-              Historical Cycle
-            </Link>
+            {NAV_LINKS.map(({ href, label }) => (
+              <Link 
+                key={href}
+                href={href} 
+                className={cn(
+                  "text-[13px] font-medium transition-colors",
+                  pathname === href ? "text-white" : "text-text-secondary hover:text-white"
+                )}
+              >
+                {label}
+              </Link>
+            ))}
           </div>
         </div>
 
