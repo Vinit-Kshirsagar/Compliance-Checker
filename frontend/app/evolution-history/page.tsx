@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { 
   History, 
   TrendingUp, 
@@ -23,7 +23,7 @@ interface EvolutionRun {
   changes_count: number;
 }
 
-export default function EvolutionHistoryPage() {
+function EvolutionHistoryContent() {
   const searchParams = useSearchParams();
   const isSuccess = searchParams.get("success") === "true";
   const [runs, setRuns] = useState<EvolutionRun[]>([]);
@@ -232,14 +232,31 @@ export default function EvolutionHistoryPage() {
         </div>
 
         <div className="flex justify-center pt-8">
-           <Link 
-              href="/simulate" 
-              className="linear-button-secondary h-12 px-10 text-xs font-bold uppercase tracking-[0.2em]"
-           >
-              Initiate New Cycle
-           </Link>
-        </div>
+            <Link 
+               href="/simulate" 
+               className="linear-button-secondary h-12 px-10 text-xs font-bold uppercase tracking-[0.2em]"
+            >
+               Initiate New Cycle
+            </Link>
+         </div>
       </div>
     </div>
+  );
+}
+
+export default function EvolutionHistoryPage() {
+  return (
+    <Suspense fallback={
+      <div className="pt-24 px-8 max-w-[1000px] mx-auto space-y-12 animate-fade-in">
+        <div className="h-10 w-64 bg-white/5 rounded-lg animate-pulse" />
+        <div className="space-y-6">
+          {[1, 2, 3].map(i => (
+            <div key={i} className="h-24 bg-white/5 rounded-2xl border border-white/5 animate-pulse" />
+          ))}
+        </div>
+      </div>
+    }>
+      <EvolutionHistoryContent />
+    </Suspense>
   );
 }
